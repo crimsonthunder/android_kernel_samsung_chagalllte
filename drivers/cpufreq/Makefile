@@ -1,6 +1,7 @@
 # CPUfreq core
-obj-$(CONFIG_CPU_FREQ)			+= cpufreq.o
 obj-$(CONFIG_CPU_BOOST)			+= cpu-boost.o
+obj-$(CONFIG_CPU_FREQ)			+= cpufreq.o cpu-boost.o
+>>>>>>> 35e1946... cpufreq: Add cpu-boost driver
 # CPUfreq stats
 obj-$(CONFIG_CPU_FREQ_STAT)             += cpufreq_stats.o
 
