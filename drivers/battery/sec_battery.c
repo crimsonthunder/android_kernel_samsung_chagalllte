@@ -2648,29 +2648,6 @@ ssize_t sec_bat_store_attrs(
 			ret = count;
 		}
 		break;
-	case BATT_TEMP_TABLE:
-		if (sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d %d\n",
-			&t[0], &t[1], &t[2], &t[3], &t[4], &t[5], &t[6], &t[7], &t[8], &t[9], &t[10], &t[11]) == 12) {
-			pr_info("%s: (new) %d %d %d %d %d %d %d %d %d %d %d %d\n",
-				__func__, t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7], t[8], t[9], t[10], t[11]);
-			pr_info("%s: (default) %d %d %d %d %d %d %d %d %d %d %d %d\n",
-				__func__,
-				battery->pdata->temp_high_threshold_event,
-				battery->pdata->temp_high_recovery_event,
-				battery->pdata->temp_low_threshold_event,
-				battery->pdata->temp_low_recovery_event,
-				battery->pdata->temp_high_threshold_normal,
-				battery->pdata->temp_high_recovery_normal,
-				battery->pdata->temp_low_threshold_normal,
-				battery->pdata->temp_low_recovery_normal,
-				battery->pdata->temp_high_threshold_lpm,
-				battery->pdata->temp_high_recovery_lpm,
-				battery->pdata->temp_low_threshold_lpm,
-				battery->pdata->temp_low_recovery_lpm);
-			update_external_temp_table(battery, t);
-			ret = count;
-		}
-		break;
 	default:
 		ret = -EINVAL;
 	}
