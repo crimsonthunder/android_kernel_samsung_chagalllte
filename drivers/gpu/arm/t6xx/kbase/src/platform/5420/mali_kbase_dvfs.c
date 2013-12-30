@@ -76,12 +76,12 @@
 
 #if defined(CONFIG_EXYNOS_THERMAL)
 #include <mach/tmu.h>
-#define GPU_MAX_CLK 733
-#define GPU_THROTTLING_90_95 700
-#define GPU_THROTTLING_95_100 600
-#define GPU_THROTTLING_100_105 480
-#define GPU_THROTTLING_105_110 266
-#define GPU_TRIPPING_110 177
+#define GPU_MAX_CLK 600
+#define GPU_THROTTLING_90_95 533
+#define GPU_THROTTLING_95_100 420
+#define GPU_THROTTLING_100_105 350
+#define GPU_THROTTLING_105_110 177
+#define GPU_TRIPPING_110 100
 #endif
 
 #define COLD_MINIMUM_VOL 950000
@@ -123,16 +123,15 @@ typedef struct _mali_dvfs_info{
 } mali_dvfs_info;
 
 static mali_dvfs_info mali_dvfs_infotbl[] = {
-	{812500, 100, 0, 40, 0, 133000, 83000, 250000},
-	{812500, 177, 42, 50, 0, 133000, 83000, 250000},
-	{862500, 266, 52, 60, 0, 400000, 222000, 250000},
-	{912500, 350, 62, 70, 0, 667000, 333000, 250000},
-	{962500, 420, 72, 80, 0, 733000, 400000, 250000},
-	{1000000, 480, 82, 85, 0, 733000, 400000, 650000},
-	{1037500, 533, 87, 90, 0, 733000, 400000, 650000},
-	{1050000, 600, 91, 93, 0, 800000, 600000, 1200000},
-	{1075000, 666, 94, 96, 0, 800000, 600000, 1300000},
-	{1100000, 733, 97, 99, 0, 933000, 600000, 1400000},
+	{812500, 100, 0, 90, 0, 160000, 83000, 250000},
+	{812500, 177, 53, 90, 0, 160000, 83000, 250000},
+	{862500, 266, 60, 90, 0, 400000, 222000, 250000},
+	{912500, 350, 70, 90, 0, 667000, 333000, 250000},
+	{962500, 420, 78, 99, 0, 800000, 400000, 250000},
+	{1000000, 480, 88, 90, 0, 800000, 400000, 650000},
+	{1037500, 533, 91, 95, 0, 800000, 400000, 1200000},
+	{1050000, 600, 96, 98, 0, 800000, 400000, 1400000},
+        {1075000, 677, 99, 100, 0, 800000, 400000, 1600000},
 };
 
 #define MALI_DVFS_STEP	ARRAY_SIZE(mali_dvfs_infotbl)
@@ -169,58 +168,7 @@ static void update_time_in_state(int level);
 /*dvfs status*/
 static mali_dvfs_status mali_dvfs_status_current;
 #ifdef MALI_DVFS_ASV_ENABLE
-static const unsigned int mali_dvfs_vol_default[] = { 812500, 812500, 862500, 912500, 962500, 1000000, 1037500, 1050000, 1075000, 1100000};
-
-ssize_t hlpr_get_gpu_volt_table(char *buf)
-{
-       int i, len = 0;
-
-       for (i = 0; i < MALI_DVFS_STEP; i++) {
-               len += sprintf(buf + len, "%d %d\n", mali_dvfs_infotbl[i].clock, mali_dvfs_infotbl[i].voltage);
-       }
-
-       return len;
-}
-
-void hlpr_set_gpu_volt_table(int gpu_table[])
-{
-        int i;
-        int u = 0;
-        for (i = 0; i < MALI_DVFS_STEP; i++)
-        {
-                mali_dvfs_infotbl[i].voltage = gpu_table[u];
-                pr_alert("SET GPU VOLTAGE TABLE %d - %d - %d", i, mali_dvfs_infotbl[i].clock, mali_dvfs_infotbl[i].voltage);
-                u++;
-	}
-}
-
-ssize_t hlpr_get_gpu_gov_table(char *buf)
-{
-	int i, len = 0;
-	for (i = dvfs_step_max-1; i >= dvfs_step_min && i >= 0; i--)
-	{
-		len += sprintf(buf + len, "%d %d\n", mali_dvfs_infotbl[i].clock, mali_dvfs_infotbl[i].max_threshold);
-		pr_alert("GET GPU GOV TABLE %d - %d - %d - %d", i, mali_dvfs_infotbl[i].clock,  mali_dvfs_infotbl[i].min_threshold, mali_dvfs_infotbl[i].max_threshold);
-	}
-	
-	return len;
-}
-
-void hlpr_set_gpu_gov_table(int gpu_table[])
-{
-	int i;
-	int u = 0;
-	for (i = dvfs_step_max-1; i >= dvfs_step_min && i >= 0; i--)
-	{
-		mali_dvfs_infotbl[i].max_threshold = gpu_table[u];
-		if (i == dvfs_step_min)
-			mali_dvfs_infotbl[i].min_threshold = 0;
-		else
-			mali_dvfs_infotbl[i].min_threshold = gpu_table[u+1]-1;
-		pr_alert("SET GPU GOV TABLE %d - %d - %d - %d", i, mali_dvfs_infotbl[i].clock, mali_dvfs_infotbl[i].min_threshold, mali_dvfs_infotbl[i].max_threshold);
-		u++;
-	}
-}
+static const unsigned int mali_dvfs_vol_default[] = { 812500, 812500, 862500, 912500, 962500, 1000000, 1037500, 1050000, 1075000};
 
 ssize_t hlpr_get_gpu_gov_mif_table(char *buf)
 {
@@ -381,7 +329,7 @@ static void mali_dvfs_decide_next_level(mali_dvfs_status *dvfs_status)
 
 	if (dvfs_status->utilisation > mali_dvfs_infotbl[dvfs_status->step].max_threshold) {
 #ifdef PLATFORM_UTILIZATION
-		if (dvfs_status->step == kbase_platform_dvfs_get_level(dvfs_step_max_minus1)) {
+		if (dvfs_status->step == kbase_platform_dvfs_get_level(677)) {
 			if (platform->utilisation > mali_dvfs_infotbl[dvfs_status->step].max_threshold) {
 				dvfs_status->step++;
 				DVFS_ASSERT(dvfs_status->step < MALI_DVFS_STEP);
