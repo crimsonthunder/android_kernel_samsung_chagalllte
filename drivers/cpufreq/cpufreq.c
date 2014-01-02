@@ -84,19 +84,10 @@ static DEFINE_PER_CPU(int, cpufreq_policy_cpu);
 static DEFINE_PER_CPU(struct rw_semaphore, cpu_policy_rwsem);
 
 static unsigned int gpu_min = 100;
-static unsigned int gpu_max = 733;
+static unsigned int gpu_max = 533;
 extern unsigned int get_cur_gpu_freq(void);
 extern ssize_t hlpr_get_gpu_gov_table(char *buf);
 extern void hlpr_set_gpu_gov_table(int gpu_table[]);
-extern ssize_t hlpr_get_gpu_volt_table(char *buf);
-extern void hlpr_set_gpu_volt_table(int gpu_table[]);
-extern ssize_t hlpr_get_gpu_gov_mif_table(char *buf);
-extern void hlpr_set_gpu_gov_mif_table(int gpu_table[]);
-extern ssize_t hlpr_get_gpu_gov_int_table(char *buf);
-extern void hlpr_set_gpu_gov_int_table(int gpu_table[]);
-extern ssize_t hlpr_get_gpu_gov_cpu_table(char *buf);
-extern void hlpr_set_gpu_gov_cpu_table(int gpu_table[]);
-
 #define lock_policy_rwsem(mode, cpu)					\
 int lock_policy_rwsem_##mode(int cpu)					\
 {									\
@@ -759,70 +750,10 @@ ssize_t store_GPU_gov_table(struct cpufreq_policy *policy, const char *buf, size
 {
 	unsigned int ret = -EINVAL;
 	int u[FREQ_STEPS_GPU];
-	ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d", &u[0], &u[1], &u[2], &u[3], &u[4], &u[5], &u[6], &u[7], &u[8], &u[9], &u[10]);
+	ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d", &u[0], &u[1], &u[2], &u[3], &u[4], &u[5], &u[6], &u[7], &u[8], &u[9]);
 
 	hlpr_set_gpu_gov_table(u);
 	return count;
-}
-
-ssize_t show_GPU_volt_table(struct cpufreq_policy *policy, char *buf)
-{
-        return hlpr_get_gpu_volt_table(buf);
-}
-
-ssize_t store_GPU_volt_table(struct cpufreq_policy *policy, const char *buf, size_t count)
-{
-        unsigned int ret = -EINVAL;
-        int u[FREQ_STEPS_GPU];
-        ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d", &u[0], &u[1], &u[2], &u[3], &u[4], &u[5], &u[6], &u[7], &u[8], &u[9], &u[10]);
-
-        hlpr_set_gpu_volt_table(u);
-        return count;
-}
-
-ssize_t show_GPU_gov_mif_table(struct cpufreq_policy *policy, char *buf)
-{
-	return hlpr_get_gpu_gov_mif_table(buf);
-}
-
-ssize_t store_GPU_gov_mif_table(struct cpufreq_policy *policy, const char *buf, size_t count)
-{
-	unsigned int ret = -EINVAL;
-	int u[FREQ_STEPS_GPU];
-	ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d", &u[0], &u[1], &u[2], &u[3], &u[4], &u[5], &u[6], &u[7], &u[8], &u[9], &u[10]);
-
-	hlpr_set_gpu_gov_mif_table(u);
-	return count;
-}
-
-ssize_t show_GPU_gov_int_table(struct cpufreq_policy *policy, char *buf)
-{
-        return hlpr_get_gpu_gov_int_table(buf);
-}
-
-ssize_t store_GPU_gov_int_table(struct cpufreq_policy *policy, const char *buf, size_t count)
-{
-        unsigned int ret = -EINVAL;
-        int u[FREQ_STEPS_GPU];
-        ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d", &u[0], &u[1], &u[2], &u[3], &u[4], &u[5], &u[6], &u[7], &u[8], &u[9], &u[10]);
-
-        hlpr_set_gpu_gov_int_table(u);
-        return count;
-}
-
-ssize_t show_GPU_gov_cpu_table(struct cpufreq_policy *policy, char *buf)
-{
-        return hlpr_get_gpu_gov_cpu_table(buf);
-}
-
-ssize_t store_GPU_gov_cpu_table(struct cpufreq_policy *policy, const char *buf, size_t count)
-{
-        unsigned int ret = -EINVAL;
-        int u[FREQ_STEPS_GPU];
-        ret = sscanf(buf, "%d %d %d %d %d %d %d %d %d %d %d", &u[0], &u[1], &u[2], &u[3], &u[4], &u[5], &u[6], &u[7], &u[8], &u[9], &u[10]);
-
-        hlpr_set_gpu_gov_cpu_table(u);
-        return count;
 }
 
 ssize_t show_scaling_cur_freq_gpu(struct cpufreq_policy *policy, char *buf)
@@ -856,6 +787,10 @@ cpufreq_freq_attr_ro(policy_min_freq);
 cpufreq_freq_attr_ro(policy_max_freq);
 cpufreq_freq_attr_rw(UV_mV_table);
 cpufreq_freq_attr_rw(UV_uV_table);
+cpufreq_freq_attr_rw(scaling_min_freq_gpu);
+cpufreq_freq_attr_rw(scaling_max_freq_gpu);
+cpufreq_freq_attr_ro(scaling_cur_freq_gpu);
+cpufreq_freq_attr_rw(GPU_gov_table);
 
 static struct attribute *default_attrs[] = {
 	&cpuinfo_min_freq.attr,
@@ -882,6 +817,10 @@ static struct attribute *default_attrs[] = {
 	&policy_max_freq.attr,
 	&UV_mV_table.attr,
 	&UV_uV_table.attr,
+	&scaling_min_freq_gpu.attr,
+	&scaling_max_freq_gpu.attr,
+	&scaling_cur_freq_gpu.attr,
+	&GPU_gov_table.attr,
 	NULL
 };
 
