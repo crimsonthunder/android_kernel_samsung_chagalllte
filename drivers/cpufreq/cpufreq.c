@@ -88,6 +88,9 @@ static unsigned int gpu_max = 533;
 extern unsigned int get_cur_gpu_freq(void);
 extern ssize_t hlpr_get_gpu_gov_table(char *buf);
 extern void hlpr_set_gpu_gov_table(int gpu_table[]);
+extern ssize_t hlpr_get_gpu_volt_table(char *buf);
+extern void hlpr_set_gpu_volt_table(int gpu_table[]);
+
 #define lock_policy_rwsem(mode, cpu)					\
 int lock_policy_rwsem_##mode(int cpu)					\
 {									\
@@ -791,6 +794,7 @@ cpufreq_freq_attr_rw(scaling_min_freq_gpu);
 cpufreq_freq_attr_rw(scaling_max_freq_gpu);
 cpufreq_freq_attr_ro(scaling_cur_freq_gpu);
 cpufreq_freq_attr_rw(GPU_gov_table);
+cpufreq_freq_attr_rw(GPU_volt_table);
 
 static struct attribute *default_attrs[] = {
 	&cpuinfo_min_freq.attr,
@@ -821,6 +825,7 @@ static struct attribute *default_attrs[] = {
 	&scaling_max_freq_gpu.attr,
 	&scaling_cur_freq_gpu.attr,
 	&GPU_gov_table.attr,
+        &GPU_volt_table.attr,
 	NULL
 };
 
