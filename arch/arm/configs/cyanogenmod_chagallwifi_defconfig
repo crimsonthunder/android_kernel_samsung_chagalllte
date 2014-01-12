@@ -38,10 +38,14 @@ CONFIG_EXPERIMENTAL=y
 CONFIG_INIT_ENV_ARG_LIMIT=32
 CONFIG_CROSS_COMPILE=""
 <<<<<<< HEAD:arch/arm/configs/cyanogenmod_chagallwifi_defconfig
+<<<<<<< HEAD:arch/arm/configs/cyanogenmod_chagallwifi_defconfig
 CONFIG_LOCALVERSION=""
 CONFIG_LOCALVERSION_AUTO=y
 =======
 CONFIG_LOCALVERSION="-halaszk-UNIVERSAL5420-V0.7A-SM-N900-PWR-CORE"
+=======
+CONFIG_LOCALVERSION="-halaszk-UNIVERSAL5420-V0.7-SM-N900-PWR-CORE"
+>>>>>>> a51cbd8... fixed exfat module compile, restored default governor to interactive:arch/arm/configs/halaszk_defconfig_N900
 # CONFIG_LOCALVERSION_AUTO is not set
 >>>>>>> d44e1e8... optimize some last changes:arch/arm/configs/halaszk_defconfig_N900
 CONFIG_HAVE_KERNEL_GZIP=y
@@ -716,9 +720,9 @@ CONFIG_CPU_FREQ_STAT=y
 # CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE is not set
 # CONFIG_CPU_FREQ_DEFAULT_GOV_POWERSAVE is not set
 # CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE is not set
-CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND=y
+# CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND is not set
 # CONFIG_CPU_FREQ_DEFAULT_GOV_CONSERVATIVE is not set
-# CONFIG_CPU_FREQ_DEFAULT_GOV_INTERACTIVE is not set
+CONFIG_CPU_FREQ_DEFAULT_GOV_INTERACTIVE=y
 CONFIG_CPU_FREQ_GOV_PERFORMANCE=y
 # CONFIG_CPU_FREQ_GOV_POWERSAVE is not set
 CONFIG_CPU_FREQ_GOV_USERSPACE=y
