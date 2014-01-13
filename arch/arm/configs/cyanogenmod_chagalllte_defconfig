@@ -35,6 +35,7 @@ CONFIG_HAVE_IRQ_WORK=y
 CONFIG_IOSCHED_ROW=y
 # CONFIG_DEFAULT_ROW is not set
 CONFIG_BCMDHD_WIFI_PM=y
+CONFIG_POWERSUSPEND=y
 ###############################
 
 #
