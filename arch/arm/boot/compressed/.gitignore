@@ -5,6 +5,10 @@ piggy.gzip
 piggy.lzo
 piggy.lzma
 piggy.xzkern
+<<<<<<< HEAD
+=======
+piggy.lz4
+>>>>>>> d9bef7e... arm: Add support for LZ4-compressed kernel
 vmlinux
 vmlinux.lds
 
