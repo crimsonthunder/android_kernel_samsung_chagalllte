@@ -1016,7 +1016,6 @@ static struct ctl_table kern_table[] = {
 };
 
 static struct ctl_table vm_table[] = {
-
 #ifdef CONFIG_DYNAMIC_PAGE_WRITEBACK
 	{
 		.procname	= "dynamic_dirty_writeback",

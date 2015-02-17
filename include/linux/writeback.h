@@ -161,11 +161,11 @@ int dirty_writeback_centisecs_handler(struct ctl_table *, int,
 
 #ifdef CONFIG_DYNAMIC_PAGE_WRITEBACK
 int dynamic_dirty_writeback_handler(struct ctl_table *, int,
-					void __user *, size_t *, loff_t *);
+				      void __user *, size_t *, loff_t *);
 int dirty_writeback_active_centisecs_handler(struct ctl_table *, int,
-						void __user *, size_t *, loff_t *);
+				      void __user *, size_t *, loff_t *);
 int dirty_writeback_suspend_centisecs_handler(struct ctl_table *, int,
-						void __user *, size_t *, loff_t *);
+				      void __user *, size_t *, loff_t *);
 #endif
 
 void global_dirty_limits(unsigned long *pbackground, unsigned long *pdirty);
