@@ -412,7 +412,7 @@ writeback_single_inode(struct inode *inode, struct bdi_writeback *wb,
 	/*
 	 * Make sure to wait on the data before writing out the metadata.
 	 * This is important for filesystems that modify metadata on data
-	 * I/O completion. We don't do it for sync(2) writeback because it has a
+	 * I/O completion.We don't do it for sync(2) writeback because it has a
 	 * separate, external IO completion path and ->sync_fs for guaranteeing
 	 * inode metadata is written back correctly.
 	 */
