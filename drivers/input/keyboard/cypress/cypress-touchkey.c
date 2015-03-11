@@ -2004,6 +2004,7 @@ static DEVICE_ATTR(boost_level, S_IWUSR | S_IWGRP, NULL, touchkey_boost_level);
 static struct attribute *touchkey_attributes[] = {
         &dev_attr_touchkey_enabled.attr,
 	&dev_attr_brightness.attr,
+	&dev_attr_touchkey_enabled.attr,
 #ifdef TK_USE_RECENT
 	&dev_attr_touchkey_recent.attr,
 #else
