@@ -465,7 +465,7 @@ static const unsigned int asv_voltage_5420_CA15[CPUFREQ_LEVEL_END_CA15] = {
 	1200000,	/* L7  1700 */
 	1200000,	/* L8  1600 */
 	1100000,	/* L9  1500 */
-	1100000,	/* L10  1400 */
+	1100000,	/* L10 1400 */
 	1100000,	/* L11 1300 */
 	1000000,	/* L12 1200 */
 	1000000,	/* L13 1100 */
@@ -476,7 +476,7 @@ static const unsigned int asv_voltage_5420_CA15[CPUFREQ_LEVEL_END_CA15] = {
 	 900000,	/* L18  600 */
 	 900000,	/* L19  500 */
 	 900000,	/* L20  400 */
-	 900000,	/* L22  300 */
+	 900000,	/* L21  300 */
 	 900000,	/* L22  200 */
 };
 
@@ -515,9 +515,9 @@ static int exynos5420_bus_table_CA7[CPUFREQ_LEVEL_END_CA7] = {
 	160000,	/* 700 MHz */
 	133000,	/* 600 MHz */
 	133000,	/* 500 MHz */
-	0,	/* 400 MHz */
-	0,	/* 300 MHz */
-	0,	/* 200 MHz */
+	133000,	/* 400 MHz */
+	133000,	/* 300 MHz */
+	133000,	/* 200 MHz */
 };
 
 static int exynos5420_bus_table_CA15[CPUFREQ_LEVEL_END_CA15] = {
@@ -894,10 +894,9 @@ static void __init set_volt_table_CA7(void)
 	exynos5420_freq_table_CA7[L2].frequency = CPUFREQ_ENTRY_INVALID;
 	max_support_idx_CA7 = L3;
 
-	min_support_idx_CA7 = L11;
-	exynos5420_freq_table_CA7[L12].frequency = CPUFREQ_ENTRY_INVALID;
+	min_support_idx_CA7 = L14;
+	exynos5420_freq_table_CA7[L11].frequency = CPUFREQ_ENTRY_INVALID;
 	exynos5420_freq_table_CA7[L13].frequency = CPUFREQ_ENTRY_INVALID;
-	exynos5420_freq_table_CA7[L14].frequency = CPUFREQ_ENTRY_INVALID;
 }
 
 static void __init set_volt_table_CA15(void)
