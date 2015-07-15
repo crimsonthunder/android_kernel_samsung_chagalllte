@@ -2671,7 +2671,6 @@ ssize_t sec_bat_store_attrs(
 			ret = count;
 		}
 		break;
-
 	default:
 		ret = -EINVAL;
 	}
