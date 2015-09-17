@@ -16,8 +16,8 @@
  */
 static inline struct bfq_io_cq *icq_to_bic(struct io_cq *icq)
 {
-	/* bic->icq is the first member, %NULL will convert to %NULL */
-	return container_of(icq, struct bfq_io_cq, icq);
+    /* bic->icq is the first member, %NULL will convert to %NULL */
+    return container_of(icq, struct bfq_io_cq, icq);
 }
 
 /**
@@ -28,9 +28,9 @@ static inline struct bfq_io_cq *icq_to_bic(struct io_cq *icq)
  * Queue lock must be held.
  */
 static inline struct bfq_io_cq *bfq_bic_lookup(struct bfq_data *bfqd,
-					       struct io_context *ioc)
+		           struct io_context *ioc)
 {
-	if (ioc)
-		return icq_to_bic(ioc_lookup_icq(ioc, bfqd->queue));
-	return NULL;
+    if (ioc)
+	return icq_to_bic(ioc_lookup_icq(ioc, bfqd->queue));
+    return NULL;
 }
