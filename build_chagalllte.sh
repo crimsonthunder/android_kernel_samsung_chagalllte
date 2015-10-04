@@ -1,6 +1,6 @@
 #!/bin/bash
 {
 	make mrproper
-	make klimtwifi_00_defconfig
+	make chagalllte_00_defconfig
         make -j5
 }
