@@ -395,7 +395,7 @@ ssize_t write_data_to_file(char *name, char *buf, size_t count, loff_t *pos)
 
 	fd = sys_open(name, O_WRONLY | O_CREAT | O_TRUNC | O_SYNC, 0664);
 	if (fd < 0) {
-		err("open file error!!\n");
+		err("open file error!!! \"%s\"\n", name);
 		return -EINVAL;
 	}
 	fp = fget(fd);
