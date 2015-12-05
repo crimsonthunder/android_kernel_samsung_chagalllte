@@ -821,12 +821,14 @@ static bool sec_bat_temperature(
 			battery->pdata->temp_low_threshold_normal;
 	}
 
+#if 0
 	dev_info(battery->dev,
 		"%s: HT(%d), HR(%d), LT(%d), LR(%d)\n",
 		__func__, battery->temp_high_threshold,
 		battery->temp_high_recovery,
 		battery->temp_low_threshold,
 		battery->temp_low_recovery);
+#endif
 	return ret;
 }
 
@@ -1540,12 +1542,13 @@ static bool sec_bat_fullcharged_check(
 	if (sec_bat_check_fullcharged(battery))
 		sec_bat_do_fullcharged(battery);
 
+#if 0
 	dev_info(battery->dev,
 		"%s: Charging Mode : %s\n", __func__,
 		battery->is_recharging ?
 		sec_bat_charging_mode_str[SEC_BATTERY_CHARGING_RECHARGING] :
 		sec_bat_charging_mode_str[battery->charging_mode]);
-
+#endif
 	return true;
 }
 
@@ -1892,6 +1895,7 @@ static void sec_bat_monitor_work(
 	sec_bat_fullcharged_check(battery);
 
 continue_monitor:
+#if 0
 	dev_info(battery->dev,
 		"%s: Status(%s), mode(%s), Health(%s), Cable(%d), Vendor(%s), level(%d%%)\n",
 		__func__,
@@ -1899,6 +1903,7 @@ continue_monitor:
 		sec_bat_charging_mode_str[battery->charging_mode],
 		sec_bat_health_str[battery->health],
 		battery->cable_type, battery->pdata->vendor, battery->siop_level);
+#endif
 
 #ifdef CONFIG_FAST_BOOT
 	dev_info(battery->dev, "%s: status=%d, soc=%d, fake_shut_down=%d\n", __func__,

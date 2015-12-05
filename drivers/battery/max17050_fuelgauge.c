@@ -10,7 +10,7 @@
  * published by the Free Software Foundation.
  */
 
-#define DEBUG
+//#define DEBUG
 
 #include <linux/battery/sec_fuelgauge.h>
 
@@ -630,6 +630,7 @@ static void fg_write_and_verify_register(struct i2c_client *client,
 
 static void fg_test_print(struct i2c_client *client)
 {
+#if 0
 	u8 data[2];
 	u32 average_vcell;
 	u16 w_data;
@@ -669,6 +670,7 @@ static void fg_test_print(struct i2c_client *client)
 	reg_data = fg_read_register(client, REMCAP_AV_REG);
 	dev_info(&client->dev, "%s: REMCAP_AV(%d), data(0x%04x)\n", __func__,
 		reg_data/2, reg_data);
+#endif
 }
 
 static void fg_periodic_read(struct i2c_client *client)

@@ -634,7 +634,9 @@ static int max77803_get_health_state(struct max77803_charger_data *charger)
 		break;
 	}
 
+#if 0
 	pr_info("%s: CHG_DTLS(0x%x), \n", __func__, reg_data);
+#endif
 
 	/* VBUS OVP state return battery OVP state */
 	vbus_state = max77803_get_vbus_state(charger);
@@ -650,6 +652,7 @@ static int max77803_get_health_state(struct max77803_charger_data *charger)
 		max77803_read_reg(charger->max77803->i2c,
 				MAX77803_CHG_REG_CHG_CNFG_00, &chg_cnfg_00);
 
+#if 0
 		/* print the log at the abnormal case */
 		if((charger->is_charging == 1) && (chg_dtls & 0x08)) {
 			max77803_read_reg(charger->max77803->i2c,
@@ -674,6 +677,7 @@ static int max77803_get_health_state(struct max77803_charger_data *charger)
 			pr_info("%s:  CHG_CNFG_09(0x%x), CHG_CNFG_12(0x%x)\n",
 					__func__, chg_cnfg_09, chg_cnfg_12);
 		}
+#endif
 
 		/* OVP is higher priority */
 		if (vbus_state == 0x02) { /* CHGIN_OVLO */
@@ -1016,10 +1020,10 @@ static int sec_chg_set_property(struct power_supply *psy,
 				current_now = usb_charging_current;
 
 			if (charger->cable_type == POWER_SUPPLY_TYPE_MAINS) {
-			    if (charger->siop_level < 100 && charger->charging_current_max > SIOP_INPUT_LIMIT_CURRENT)
-				set_charging_current_max = SIOP_INPUT_LIMIT_CURRENT;
-			    else
-				set_charging_current_max = charger->charging_current_max;
+				if (charger->siop_level < 100 && charger->charging_current_max > SIOP_INPUT_LIMIT_CURRENT)
+					set_charging_current_max = SIOP_INPUT_LIMIT_CURRENT;
+				else
+					set_charging_current_max = charger->charging_current_max;
 
 			max77803_set_input_current(charger, set_charging_current_max);
  

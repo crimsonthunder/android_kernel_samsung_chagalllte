@@ -1476,6 +1476,7 @@ static struct device_attribute *fp_attrs[] = {
 
 static void vfsspi_work_func_debug(struct work_struct *work)
 {
+#if 0
 	if (g_data->ocp_pin)
 		pr_info("%s ocp state: %d, ocp pin: %d\n"
 			"%s ldo pin 3.3v: %d, ldo pin 1.8v: %d, sleep pin: %d, tz_mode: %d\n",
@@ -1507,6 +1508,7 @@ static void vfsspi_work_func_debug(struct work_struct *work)
 				gpio_get_value(g_data->sleepPin),
 				g_data->tz_mode);
 	}
+#endif
 }
 
 static void vfsspi_enable_debug_timer(void)
