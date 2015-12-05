@@ -1092,7 +1092,7 @@ static int synaptics_rmi4_f12_abs_report(struct synaptics_rmi4_data *rmi4_data,
 #endif
 
 #ifdef WAKE_GESTURE
-	if (rmi4_data->wake_gesture_enabled == 1 && new_finger_pressed) {
+	if (rmi4_data->wake_gesture_enabled == 1 && touch_count == 1 && new_finger_pressed) {
 		unsigned long newJiffies = jiffies;
 
 		if ((newJiffies - oldJiffies) < 50) {
