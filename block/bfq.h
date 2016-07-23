@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
- * BFQ-v7r8 for 3.4.0: data structures and common functions prototypes.
-=======
  * BFQ-v7r7 for 3.4.0: data structures and common functions prototypes.
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
  *
  * Based on ideas and code from CFQ:
  * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
@@ -51,16 +47,6 @@ struct bfq_entity;
  * of the containing bfqd.
  */
 struct bfq_service_tree {
-<<<<<<< HEAD
-    struct rb_root active;
-    struct rb_root idle;
-
-    struct bfq_entity *first_idle;
-    struct bfq_entity *last_idle;
-
-    u64 vtime;
-    unsigned long wsum;
-=======
 	struct rb_root active;
 	struct rb_root idle;
 
@@ -69,7 +55,6 @@ struct bfq_service_tree {
 
 	u64 vtime;
 	unsigned long wsum;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 /**
@@ -92,15 +77,9 @@ struct bfq_service_tree {
  * All the fields are protected by the queue lock of the containing bfqd.
  */
 struct bfq_sched_data {
-<<<<<<< HEAD
-    struct bfq_entity *in_service_entity;
-    struct bfq_entity *next_in_service;
-    struct bfq_service_tree service_tree[BFQ_IOPRIO_CLASSES];
-=======
 	struct bfq_entity *in_service_entity;
 	struct bfq_entity *next_in_service;
 	struct bfq_service_tree service_tree[BFQ_IOPRIO_CLASSES];
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 /**
@@ -112,15 +91,9 @@ struct bfq_sched_data {
  *                and @group_weights_tree).
  */
 struct bfq_weight_counter {
-<<<<<<< HEAD
-    short int weight;
-    unsigned int num_active;
-    struct rb_node weights_node;
-=======
 	short int weight;
 	unsigned int num_active;
 	struct rb_node weights_node;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 /**
@@ -176,33 +149,6 @@ struct bfq_weight_counter {
  * containing bfqd.
  */
 struct bfq_entity {
-<<<<<<< HEAD
-    struct rb_node rb_node;
-    struct bfq_weight_counter *weight_counter;
-
-    int on_st;
-
-    u64 finish;
-    u64 start;
-
-    struct rb_root *tree;
-
-    u64 min_start;
-
-    unsigned long service, budget;
-    unsigned short weight, new_weight;
-    unsigned short orig_weight;
-
-    struct bfq_entity *parent;
-
-    struct bfq_sched_data *my_sched_data;
-    struct bfq_sched_data *sched_data;
-
-    unsigned short ioprio, new_ioprio;
-    unsigned short ioprio_class, new_ioprio_class;
-
-    int ioprio_changed;
-=======
 	struct rb_node rb_node;
 	struct bfq_weight_counter *weight_counter;
 
@@ -228,7 +174,6 @@ struct bfq_entity {
 	unsigned short ioprio_class, new_ioprio_class;
 
 	int ioprio_changed;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 struct bfq_group;
@@ -291,53 +236,6 @@ struct bfq_group;
  * All the fields are protected by the queue lock of the containing bfqd.
  */
 struct bfq_queue {
-<<<<<<< HEAD
-    atomic_t ref;
-    struct bfq_data *bfqd;
-
-    /* fields for cooperating queues handling */
-    struct bfq_queue *new_bfqq;
-    struct rb_node pos_node;
-    struct rb_root *pos_root;
-
-    struct rb_root sort_list;
-    struct request *next_rq;
-    int queued[2];
-    int allocated[2];
-    int meta_pending;
-    struct list_head fifo;
-
-    struct bfq_entity entity;
-
-    unsigned long max_budget;
-    unsigned long budget_timeout;
-
-    int dispatched;
-
-    unsigned int flags;
-
-    struct list_head bfqq_list;
-
-    struct hlist_node burst_list_node;
-
-    unsigned int seek_samples;
-    u64 seek_total;
-    sector_t seek_mean;
-    sector_t last_request_pos;
-
-    unsigned int requests_within_timer;
-
-    pid_t pid;
-    struct bfq_io_cq *bic;
-
-    /* weight-raising fields */
-    unsigned long wr_cur_max_time;
-    unsigned long soft_rt_next_start;
-    unsigned long last_wr_start_finish;
-    unsigned int wr_coeff;
-    unsigned long last_idle_bklogged;
-    unsigned long service_from_backlogged;
-=======
 	atomic_t ref;
 	struct bfq_data *bfqd;
 
@@ -383,7 +281,6 @@ struct bfq_queue {
 	unsigned int wr_coeff;
 	unsigned long last_idle_bklogged;
 	unsigned long service_from_backlogged;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 /**
@@ -393,19 +290,11 @@ struct bfq_queue {
  * @ttime_mean: average process thinktime
  */
 struct bfq_ttime {
-<<<<<<< HEAD
-    unsigned long last_end_request;
-
-    unsigned long ttime_total;
-    unsigned long ttime_samples;
-    unsigned long ttime_mean;
-=======
 	unsigned long last_end_request;
 
 	unsigned long ttime_total;
 	unsigned long ttime_samples;
 	unsigned long ttime_mean;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 /**
@@ -435,27 +324,6 @@ struct bfq_ttime {
  *                       of the process' @bfq_queues
  */
 struct bfq_io_cq {
-<<<<<<< HEAD
-    struct io_cq icq; /* must be the first member */
-    struct bfq_queue *bfqq[2];
-    struct bfq_ttime ttime;
-    int ioprio;
-
-    unsigned int wr_time_left;
-    bool saved_idle_window;
-    bool saved_IO_bound;
-
-    bool saved_in_large_burst;
-    bool was_in_burst_list;
-
-    unsigned int cooperations;
-    unsigned int failed_cooperations;
-};
-
-enum bfq_device_speed {
-    BFQ_BFQD_FAST,
-    BFQ_BFQD_SLOW,
-=======
 	struct io_cq icq; /* must be the first member */
 	struct bfq_queue *bfqq[2];
 	struct bfq_ttime ttime;
@@ -474,7 +342,6 @@ enum bfq_device_speed {
 enum bfq_device_speed {
 	BFQ_BFQD_FAST,
 	BFQ_BFQD_SLOW,
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 /**
@@ -551,10 +418,7 @@ enum bfq_device_speed {
  * @group_list: list of all the bfq_groups active on the device.
  * @active_list: list of all the bfq_queues active on the device.
  * @idle_list: list of all the bfq_queues idle on the device.
-<<<<<<< HEAD
-=======
  * @bfq_quantum: max number of requests dispatched per dispatch round.
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
  * @bfq_fifo_expire: timeout for async/sync requests; when it expires
  *                   requests are served in fifo order.
  * @bfq_back_penalty: weight of backward seeks wrt forward ones.
@@ -618,116 +482,6 @@ enum bfq_device_speed {
  * All the fields are protected by the @queue lock.
  */
 struct bfq_data {
-<<<<<<< HEAD
-    struct request_queue *queue;
-
-    struct bfq_group *root_group;
-    struct rb_root rq_pos_tree;
-
-#ifdef CONFIG_CGROUP_BFQIO
-    int active_numerous_groups;
-#endif
-
-    struct rb_root queue_weights_tree;
-    struct rb_root group_weights_tree;
-
-    int busy_queues;
-    int busy_in_flight_queues;
-    int const_seeky_busy_in_flight_queues;
-    int wr_busy_queues;
-    int queued;
-    int rq_in_driver;
-    int sync_flight;
-
-    int max_rq_in_driver;
-    int hw_tag_samples;
-    int hw_tag;
-
-    int budgets_assigned;
-
-    struct timer_list idle_slice_timer;
-    struct work_struct unplug_work;
-
-    struct bfq_queue *in_service_queue;
-    struct bfq_io_cq *in_service_bic;
-
-    sector_t last_position;
-
-    ktime_t last_budget_start;
-    ktime_t last_idling_start;
-    int peak_rate_samples;
-    u64 peak_rate;
-    unsigned long bfq_max_budget;
-
-    struct hlist_head group_list;
-    struct list_head active_list;
-    struct list_head idle_list;
-
-    unsigned int bfq_fifo_expire[2];
-    unsigned int bfq_back_penalty;
-    unsigned int bfq_back_max;
-    unsigned int bfq_slice_idle;
-    u64 bfq_class_idle_last_service;
-
-    unsigned int bfq_user_max_budget;
-    unsigned int bfq_max_budget_async_rq;
-    unsigned int bfq_timeout[2];
-
-    unsigned int bfq_coop_thresh;
-    unsigned int bfq_failed_cooperations;
-    unsigned int bfq_requests_within_timer;
-
-    unsigned long last_ins_in_burst;
-    unsigned long bfq_burst_interval;
-    int burst_size;
-    unsigned long bfq_large_burst_thresh;
-    bool large_burst;
-    struct hlist_head burst_list;
-
-    bool low_latency;
-
-    /* parameters of the low_latency heuristics */
-    unsigned int bfq_wr_coeff;
-    unsigned int bfq_wr_max_time;
-    unsigned int bfq_wr_rt_max_time;
-    unsigned int bfq_wr_min_idle_time;
-    unsigned long bfq_wr_min_inter_arr_async;
-    unsigned int bfq_wr_max_softrt_rate;
-    u64 RT_prod;
-    enum bfq_device_speed device_speed;
-
-    struct bfq_queue oom_bfqq;
-};
-
-enum bfqq_state_flags {
-    BFQ_BFQQ_FLAG_busy = 0,		/* has requests or is in service */
-    BFQ_BFQQ_FLAG_wait_request,	/* waiting for a request */
-    BFQ_BFQQ_FLAG_must_alloc,	/* must be allowed rq alloc */
-    BFQ_BFQQ_FLAG_fifo_expire,	/* FIFO checked in this slice */
-    BFQ_BFQQ_FLAG_idle_window,	/* slice idling enabled */
-    BFQ_BFQQ_FLAG_sync,		/* synchronous queue */
-    BFQ_BFQQ_FLAG_budget_new,	/* no completion with this budget */
-    BFQ_BFQQ_FLAG_IO_bound,		/*
-		     * bfqq has timed-out at least once
-		     * having consumed at most 2/10 of
-		     * its budget
-		     */
-    BFQ_BFQQ_FLAG_in_large_burst,	/*
-		     * bfqq activated in a large burst,
-		     * see comments to bfq_handle_burst.
-		     */
-    BFQ_BFQQ_FLAG_constantly_seeky,	/*
-		     * bfqq has proved to be slow and
-		     * seeky until budget timeout
-		     */
-    BFQ_BFQQ_FLAG_softrt_update,	/*
-		     * may need softrt-next-start
-		     * update
-		     */
-    BFQ_BFQQ_FLAG_coop,		/* bfqq is shared */
-    BFQ_BFQQ_FLAG_split_coop,	/* shared bfqq will be split */
-    BFQ_BFQQ_FLAG_just_split,	/* queue has just been split */
-=======
 	struct request_queue *queue;
 
 	struct bfq_group *root_group;
@@ -838,23 +592,11 @@ enum bfqq_state_flags {
 	BFQ_BFQQ_FLAG_coop,		/* bfqq is shared */
 	BFQ_BFQQ_FLAG_split_coop,	/* shared bfqq will be split */
 	BFQ_BFQQ_FLAG_just_split,	/* queue has just been split */
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 #define BFQ_BFQQ_FNS(name)						\
 static inline void bfq_mark_bfqq_##name(struct bfq_queue *bfqq)		\
 {									\
-<<<<<<< HEAD
-    (bfqq)->flags |= (1 << BFQ_BFQQ_FLAG_##name);			\
-}									\
-static inline void bfq_clear_bfqq_##name(struct bfq_queue *bfqq)	\
-{									\
-    (bfqq)->flags &= ~(1 << BFQ_BFQQ_FLAG_##name);			\
-}									\
-static inline int bfq_bfqq_##name(const struct bfq_queue *bfqq)		\
-{									\
-    return ((bfqq)->flags & (1 << BFQ_BFQQ_FLAG_##name)) != 0;	\
-=======
 	(bfqq)->flags |= (1 << BFQ_BFQQ_FLAG_##name);			\
 }									\
 static inline void bfq_clear_bfqq_##name(struct bfq_queue *bfqq)	\
@@ -864,7 +606,6 @@ static inline void bfq_clear_bfqq_##name(struct bfq_queue *bfqq)	\
 static inline int bfq_bfqq_##name(const struct bfq_queue *bfqq)		\
 {									\
 	return ((bfqq)->flags & (1 << BFQ_BFQQ_FLAG_##name)) != 0;	\
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 }
 
 BFQ_BFQQ_FNS(busy);
@@ -872,10 +613,7 @@ BFQ_BFQQ_FNS(wait_request);
 BFQ_BFQQ_FNS(must_alloc);
 BFQ_BFQQ_FNS(fifo_expire);
 BFQ_BFQQ_FNS(idle_window);
-<<<<<<< HEAD
-=======
 BFQ_BFQQ_FNS(prio_changed);
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 BFQ_BFQQ_FNS(sync);
 BFQ_BFQQ_FNS(budget_new);
 BFQ_BFQQ_FNS(IO_bound);
@@ -889,22 +627,6 @@ BFQ_BFQQ_FNS(softrt_update);
 
 /* Logging facilities. */
 #define bfq_log_bfqq(bfqd, bfqq, fmt, args...) \
-<<<<<<< HEAD
-    blk_add_trace_msg((bfqd)->queue, "bfq%d " fmt, (bfqq)->pid, ##args)
-
-#define bfq_log(bfqd, fmt, args...) \
-    blk_add_trace_msg((bfqd)->queue, "bfq " fmt, ##args)
-
-/* Expiration reasons. */
-enum bfqq_expiration {
-    BFQ_BFQQ_TOO_IDLE = 0,		/*
-		     * queue has been idling for
-		     * too long
-		     */
-    BFQ_BFQQ_BUDGET_TIMEOUT,	/* budget took too long to be used */
-    BFQ_BFQQ_BUDGET_EXHAUSTED,	/* budget consumed */
-    BFQ_BFQQ_NO_MORE_REQUESTS,	/* the queue has no more requests */
-=======
 	blk_add_trace_msg((bfqd)->queue, "bfq%d " fmt, (bfqq)->pid, ##args)
 
 #define bfq_log(bfqd, fmt, args...) \
@@ -919,7 +641,6 @@ enum bfqq_expiration {
 	BFQ_BFQQ_BUDGET_TIMEOUT,	/* budget took too long to be used */
 	BFQ_BFQQ_BUDGET_EXHAUSTED,	/* budget consumed */
 	BFQ_BFQQ_NO_MORE_REQUESTS,	/* the queue has no more requests */
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 #ifdef CONFIG_CGROUP_BFQIO
@@ -958,22 +679,6 @@ enum bfqq_expiration {
  *    o All the other fields are protected by the @bfqd queue lock.
  */
 struct bfq_group {
-<<<<<<< HEAD
-    struct bfq_entity entity;
-    struct bfq_sched_data sched_data;
-
-    struct hlist_node group_node;
-    struct hlist_node bfqd_node;
-
-    void *bfqd;
-
-    struct bfq_queue *async_bfqq[2][IOPRIO_BE_NR];
-    struct bfq_queue *async_idle_bfqq;
-
-    struct bfq_entity *my_entity;
-
-    int active_entities;
-=======
 	struct bfq_entity entity;
 	struct bfq_sched_data sched_data;
 
@@ -988,7 +693,6 @@ struct bfq_group {
 	struct bfq_entity *my_entity;
 
 	int active_entities;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 
 /**
@@ -1004,21 +708,6 @@ struct bfq_group {
  * @ioprio and @ioprio_class are protected by @lock.
  */
 struct bfqio_cgroup {
-<<<<<<< HEAD
-    struct cgroup_subsys_state css;
-
-    unsigned short weight, ioprio, ioprio_class;
-
-    spinlock_t lock;
-    struct hlist_head group_data;
-};
-#else
-struct bfq_group {
-    struct bfq_sched_data sched_data;
-
-    struct bfq_queue *async_bfqq[2][IOPRIO_BE_NR];
-    struct bfq_queue *async_idle_bfqq;
-=======
 	struct cgroup_subsys_state css;
 
 	unsigned short weight, ioprio, ioprio_class;
@@ -1032,34 +721,12 @@ struct bfq_group {
 
 	struct bfq_queue *async_bfqq[2][IOPRIO_BE_NR];
 	struct bfq_queue *async_idle_bfqq;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 };
 #endif
 
 static inline struct bfq_service_tree *
 bfq_entity_service_tree(struct bfq_entity *entity)
 {
-<<<<<<< HEAD
-    struct bfq_sched_data *sched_data = entity->sched_data;
-    unsigned int idx = entity->ioprio_class - 1;
-
-    BUG_ON(idx >= BFQ_IOPRIO_CLASSES);
-    BUG_ON(sched_data == NULL);
-
-    return sched_data->service_tree + idx;
-}
-
-static inline struct bfq_queue *bic_to_bfqq(struct bfq_io_cq *bic,
-		        bool is_sync)
-{
-    return bic->bfqq[is_sync];
-}
-
-static inline void bic_set_bfqq(struct bfq_io_cq *bic,
-		struct bfq_queue *bfqq, bool is_sync)
-{
-    bic->bfqq[is_sync] = bfqq;
-=======
 	struct bfq_sched_data *sched_data = entity->sched_data;
 	unsigned int idx = entity->ioprio_class - 1;
 
@@ -1079,16 +746,11 @@ static inline void bic_set_bfqq(struct bfq_io_cq *bic,
 				struct bfq_queue *bfqq, bool is_sync)
 {
 	bic->bfqq[is_sync] = bfqq;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 }
 
 static inline struct bfq_data *bic_to_bfqd(struct bfq_io_cq *bic)
 {
-<<<<<<< HEAD
-    return bic->icq.q->elevator->elevator_data;
-=======
 	return bic->icq.q->elevator->elevator_data;
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 }
 
 /**
@@ -1106,43 +768,6 @@ static inline struct bfq_data *bic_to_bfqd(struct bfq_io_cq *bic)
  * returns the dereferenced pointer, with the queue locked.
  */
 static inline struct bfq_data *bfq_get_bfqd_locked(void **ptr,
-<<<<<<< HEAD
-			   unsigned long *flags)
-{
-    struct bfq_data *bfqd;
-
-    rcu_read_lock();
-    bfqd = rcu_dereference(*(struct bfq_data **)ptr);
-
-    if (bfqd != NULL) {
-	spin_lock_irqsave(bfqd->queue->queue_lock, *flags);
-	if (*ptr == bfqd)
-	    goto out;
-	spin_unlock_irqrestore(bfqd->queue->queue_lock, *flags);
-    }
-
-    bfqd = NULL;
-out:
-    rcu_read_unlock();
-    return bfqd;
-}
-
-static inline void bfq_put_bfqd_unlock(struct bfq_data *bfqd,
-		       unsigned long *flags)
-{
-    spin_unlock_irqrestore(bfqd->queue->queue_lock, *flags);
-}
-
-static void bfq_check_ioprio_change(struct io_context *ioc,
-		    struct bfq_io_cq *bic);
-static void bfq_put_queue(struct bfq_queue *bfqq);
-static void bfq_dispatch_insert(struct request_queue *q, struct request *rq);
-static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
-		       struct bfq_group *bfqg, int is_sync,
-		       struct io_context *ioc, gfp_t gfp_mask);
-static void bfq_end_wr_async_queues(struct bfq_data *bfqd,
-		    struct bfq_group *bfqg);
-=======
 						   unsigned long *flags)
 {
 	struct bfq_data *bfqd;
@@ -1178,7 +803,6 @@ static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
 				       struct io_context *ioc, gfp_t gfp_mask);
 static void bfq_end_wr_async_queues(struct bfq_data *bfqd,
 				    struct bfq_group *bfqg);
->>>>>>> 268d095... Added I/O scheds, bfq, row, test, vr, zen, noop, fiops, fifo
 static void bfq_put_async_queues(struct bfq_data *bfqd, struct bfq_group *bfqg);
 static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq);
 
