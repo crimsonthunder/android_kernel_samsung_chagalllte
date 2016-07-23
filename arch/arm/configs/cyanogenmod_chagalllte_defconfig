@@ -82,6 +82,7 @@ CONFIG_NEED_MACH_MEMORY_H=y
 CONFIG_GENERIC_BUG=y
 CONFIG_DEFCONFIG_LIST="/lib/modules/$UNAME_RELEASE/.config"
 CONFIG_HAVE_IRQ_WORK=y
+arch_power=on
 
 #
 # General setup
