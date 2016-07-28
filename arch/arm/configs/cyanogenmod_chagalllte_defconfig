@@ -31,6 +31,11 @@ CONFIG_GENERIC_BUG=y
 CONFIG_DEFCONFIG_LIST="/lib/modules/$UNAME_RELEASE/.config"
 CONFIG_HAVE_IRQ_WORK=y
 
+###########My Addons###########
+CONFIG_IOSCHED_ROW=y
+# CONFIG_DEFAULT_ROW is not set
+###############################
+
 #
 # General setup
 #
