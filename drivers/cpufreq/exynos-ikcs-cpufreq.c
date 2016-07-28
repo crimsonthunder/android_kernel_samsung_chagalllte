@@ -90,9 +90,6 @@ static unsigned int freq_max[CA_END] __read_mostly;	/* Maximum (Big/Little) cloc
 #define ARM_INT_SKEW_FREQ	1600000
 #define ARM_INT_SKEW_FREQ_H	1800000
 
-#define ARM_MAX_VOLT		1362500
-#define KFC_MAX_VOLT		1362500
-
 static struct exynos_dvfs_info *exynos_info[CA_END];
 static struct exynos_dvfs_info exynos_info_CA7;
 static struct exynos_dvfs_info exynos_info_CA15;
