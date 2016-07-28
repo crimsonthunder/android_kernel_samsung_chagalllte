@@ -224,4 +224,3 @@ static __always_inline void mem_copy_bwd(unsigned long dstp,
 #endif
 
 #endif
->>>>>>> fb8f1b4... lib: introduce some memory copy macros and functions
