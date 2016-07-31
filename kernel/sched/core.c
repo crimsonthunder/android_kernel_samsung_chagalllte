@@ -86,6 +86,8 @@
 #include "../workqueue_sched.h"
 #include <mach/sec_debug.h>
 
+ATOMIC_NOTIFIER_HEAD(migration_notifier_head);
+
 #define CREATE_TRACE_POINTS
 #include <trace/events/sched.h>
 
