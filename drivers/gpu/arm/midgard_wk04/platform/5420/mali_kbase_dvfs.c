@@ -230,6 +230,7 @@ void hlpr_set_gpu_gov_table(int gpu_table[])
   
 void hlpr_set_min_max_G3D(unsigned int min, unsigned int max)
 {
+        int i;
 	int tbl0[1] = { 95 };
 	int tbl1[2] = { 95, 50 };
 	int tbl2[3] = { 95, 70, 30 };
@@ -1158,7 +1159,7 @@ int kbase_platform_dvfs_get_level(int freq)
 	int i;
 	for (i = 0; i < MALI_DVFS_STEP; i++) {
 		if (mali_dvfs_infotbl[i].clock == freq)
-		+		{
+				{
 			if (i >= dvfs_step_max)
 				return dvfs_step_max-1;
 			if (i < dvfs_step_min)

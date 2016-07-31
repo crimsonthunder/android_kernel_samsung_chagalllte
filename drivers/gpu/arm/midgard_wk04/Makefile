@@ -13,7 +13,7 @@
 #
 
 
-
+CFLAGS_KERNEL := -fno-aggressive-loop-optimizations
 KDIR ?= /lib/modules/$(shell uname -r)/build
 
 UMP_PATH_RELATIVE = $(CURDIR)/../../../base/ump
